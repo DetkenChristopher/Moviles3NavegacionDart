@@ -69,7 +69,10 @@ Widget btnEjercicio2(context){
 
 Widget btnEjercicio3(context){
   return(
-    FilledButton(onPressed: ()=>Navigator.push(context, MaterialPageRoute(builder: (context)=> Ejercicio12())), child: Text("Pregunta 12"))
+    FilledButton(onPressed: 
+    ()=>Navigator.push(context, 
+    MaterialPageRoute(builder: (context)=> Ejercicio12())), 
+    child: Text("Pregunta 12"))
   );
 
 }

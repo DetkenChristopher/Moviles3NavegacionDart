@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 class Ejercicio10 extends StatelessWidget {
   const Ejercicio10({super.key});
 
@@ -9,7 +8,6 @@ class Ejercicio10 extends StatelessWidget {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Cuerpo(),
-
     );
   }
 }
@@ -20,21 +18,102 @@ class Cuerpo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-       appBar: AppBar(title: Text("Ejercicio 10"),),
-      body: Center(child: Column(
-        children: [
-          OutlinedButton(onPressed: ()=>Navigator.pop(context), child: Text("Regresar"))
-        ],
-      ))
-
+      appBar: AppBar(title: Text("Programa de intercambio")),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            OutlinedButton(
+              onPressed: () => Navigator.pop(context),
+              child: Text("Regresar"),
+            ),
+            Verificacion(context),
+          ],
+        ),
+      ),
     );
   }
 }
-//Se solicita un programa que evalúe si un estudiante puede participar en un 
-//programa de intercambio estudiantil. El programa pedirá al usuario su edad, 
-//nivel de inglés (básico, intermedio o avanzado) y promedio de calificaciones. 
-//Si el estudiante tiene entre 16 y 25 años, un nivel de inglés intermedio o avanzado, 
-//y un promedio de calificaciones mayor o igual a 8, 
-//el programa imprimirá "El estudiante es apto para participar en el programa de intercambio". 
-//En caso contrario, imprimirá "Lo siento, el estudiante no cumple con los requisitos para 
-//el programa de intercambio".
+
+Widget Verificacion(BuildContext context) {
+  final TextEditingController _edad = TextEditingController();
+  final TextEditingController _nivelIngles = TextEditingController();
+  final TextEditingController _promedio = TextEditingController();
+
+  return Padding(
+    padding: const EdgeInsets.all(16.0),
+    child: Column(
+      children: [
+        TextField(
+          controller: _edad,
+          keyboardType: TextInputType.number,
+          decoration: InputDecoration(
+            border: OutlineInputBorder(),
+            labelText: "Ingrese su edad",
+          ),
+        ),
+        SizedBox(height: 10),
+        TextField(
+          controller: _nivelIngles,
+          decoration: InputDecoration(
+            border: OutlineInputBorder(),
+            labelText:
+                "Ingrese su nivel de inglés (básico, intermedio o avanzado)",
+          ),
+        ),
+        SizedBox(height: 10),
+        TextField(
+          controller: _promedio,
+          keyboardType: TextInputType.number,
+          decoration: InputDecoration(
+            border: OutlineInputBorder(),
+            labelText: "Ingrese su promedio",
+          ),
+        ),
+        SizedBox(height: 10),
+        ElevatedButton(
+          onPressed: () {
+            String resultado = intercambioVerificacion(
+              _edad.text,
+              _nivelIngles.text,
+              _promedio.text,
+            );
+            mensajeConfirmacion(context, resultado);
+          },
+          child: Text("Verificación"),
+        ),
+      ],
+    ),
+  );
+}
+
+String intercambioVerificacion(String edadStr, String nivelIngles, String promedioStr) {
+  int edad = int.tryParse(edadStr) ?? 0;
+  double promedio = double.tryParse(promedioStr) ?? 0.0;
+  nivelIngles = nivelIngles.toLowerCase().trim();
+
+  if (edad >= 16 &&
+      edad <= 25 &&
+      (nivelIngles == "intermedio" || nivelIngles == "avanzado") &&
+      promedio >= 8.0) {
+    return "El estudiante es apto para participar en el programa de intercambio.";
+  } else {
+    return "Lo siento, el estudiante no cumple con los requisitos para el programa de intercambio.";
+  }
+}
+
+void mensajeConfirmacion(BuildContext context, String mensaje) {
+  showDialog(
+    context: context,
+    builder: (context) => AlertDialog(
+      title: Text("Resultado"),
+      content: Text(mensaje),
+      actions: [
+        FilledButton(
+          onPressed: () => Navigator.pop(context),
+          child: Text("Salir"),
+        ),
+      ],
+    ),
+  );
+}

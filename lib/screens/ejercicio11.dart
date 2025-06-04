@@ -25,6 +25,7 @@ class Cuerpo extends StatelessWidget {
         children: [
           OutlinedButton(onPressed: ()=>Navigator.pop(context), child: Text("Regresar"))
         ],
+        
       ))
 
     );
