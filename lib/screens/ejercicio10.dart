@@ -5,10 +5,7 @@ class Ejercicio10 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Cuerpo(),
-    );
+    return const Cuerpo(); // Ya no usamos MaterialApp aquí
   }
 }
 
@@ -20,15 +17,18 @@ class Cuerpo extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: Text("Programa de intercambio")),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            OutlinedButton(
-              onPressed: () => Navigator.pop(context),
-              child: Text("Regresar"),
-            ),
-            Verificacion(context),
-          ],
+        child: SingleChildScrollView( // Previene overflow si el teclado aparece
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Verificacion(context),
+              SizedBox(height: 20),
+              OutlinedButton(
+                onPressed: () => Navigator.pop(context),
+                child: Text("Regresar"),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -57,8 +57,7 @@ Widget Verificacion(BuildContext context) {
           controller: _nivelIngles,
           decoration: InputDecoration(
             border: OutlineInputBorder(),
-            labelText:
-                "Ingrese su nivel de inglés (básico, intermedio o avanzado)",
+            labelText: "Ingrese su nivel de inglés (básico, intermedio o avanzado)",
           ),
         ),
         SizedBox(height: 10),

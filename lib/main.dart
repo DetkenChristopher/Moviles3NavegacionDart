@@ -3,11 +3,8 @@ import 'package:navegacion1/screens/ejercicio10.dart';
 import 'package:navegacion1/screens/ejercicio11.dart';
 import 'package:navegacion1/screens/ejercicio12.dart';
 
-void main(){
-  runApp(Navegacion1());
-
-
-
+void main() {
+  runApp(const Navegacion1());
 }
 
 class Navegacion1 extends StatelessWidget {
@@ -28,51 +25,99 @@ class Cuerpo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Ejercicio 00"),),
+      appBar: AppBar(
+        title: const Text("Menú de Ejercicios"),
+        backgroundColor: const Color.fromRGBO(4, 117, 230, 1),
+        centerTitle: true,
+      ),
       body: Container(
-        decoration: BoxDecoration(
-          color: (Color.fromRGBO(4, 117, 230, 1)),
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Color(0xFF0475E6), Color(0xFF81D4FA)],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
         ),
         child: Center(
-          child: Column(children: [
-            btnEjercicio1(context),
-            btnEjercicio2(context),
-            btnEjercicio3(context),
-          
-          ],),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              _titulo(),
+              const SizedBox(height: 30),
+              btnEjercicio1(context),
+              const SizedBox(height: 15),
+              btnEjercicio2(context),
+              const SizedBox(height: 15),
+              btnEjercicio3(context),
+            ],
+          ),
         ),
-
       ),
     );
   }
 }
 
-Widget btnEjercicio1(context){
-  return(
-    FilledButton(onPressed: 
-    ()=>Navigator.push(context, 
-    MaterialPageRoute(builder: (context)=>Ejercicio10())), 
-    child: Text("Pregunta 10"))
+Widget _titulo() {
+  return const Text(
+    "Selecciona una pregunta",
+    style: TextStyle(
+      fontSize: 24,
+      fontWeight: FontWeight.bold,
+      color: Colors.white,
+    ),
   );
-
 }
 
-Widget btnEjercicio2(context){
-  return(
-    FilledButton(onPressed: 
-    ()=>Navigator.push(context,
-     MaterialPageRoute(builder: (context)=> Ejercicio11())),
-    child: Text("Pregunta 11"))
+Widget btnEjercicio1(BuildContext context) {
+  return _boton(
+    context,
+    "Pregunta 10",
+    () => Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const Ejercicio10()),
+    ),
   );
-
 }
 
-Widget btnEjercicio3(context){
-  return(
-    FilledButton(onPressed: 
-    ()=>Navigator.push(context, 
-    MaterialPageRoute(builder: (context)=> Ejercicio12())), 
-    child: Text("Pregunta 12"))
+Widget btnEjercicio2(BuildContext context) {
+  return _boton(
+    context,
+    "Pregunta 11",
+    () => Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const Ejercicio11()),
+    ),
   );
+}
 
+Widget btnEjercicio3(BuildContext context) {
+  return _boton(
+    context,
+    "Pregunta 12",
+    () => Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const Ejercicio12()),
+    ),
+  );
+}
+
+Widget _boton(BuildContext context, String texto, VoidCallback onPressed) {
+  return SizedBox(
+    width: 220,
+    height: 50,
+    child: ElevatedButton(
+      onPressed: onPressed,
+      style: ElevatedButton.styleFrom(
+        backgroundColor: Colors.white,
+        foregroundColor: const Color(0xFF0475E6),
+        textStyle: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15),
+        ),
+        elevation: 5,
+        shadowColor: Colors.black45,
+      ),
+      child: Text(texto),
+    ),
+  );
 }
